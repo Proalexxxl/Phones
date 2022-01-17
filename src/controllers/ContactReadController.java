@@ -1,17 +1,20 @@
 package controllers;
 
+import database.entities.Contact;
 import models.AppModel;
 import models.ContactReadModel;
+import utils.Constants;
 import views.AppView;
 import views.ContactReadView;
-
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
 
 public class ContactReadController {
 
     ContactReadModel model;
     ContactReadView view;
+    AppController appController;
+    AppModel appModel;
+    AppView appView;
 
     public ContactReadController(ContactReadModel model, ContactReadView view) {
         this.model = model;
@@ -20,29 +23,41 @@ public class ContactReadController {
 
     public void getContacts() {
         String str = readContacts();
-        view.getOutput(str);
-        restartApp();
+
+        if (str.equals(Constants.DB_ABSENT_MSG)) {
+            view.getOutput(str);
+            System.exit(0);
+        } else {
+            view.getOutput(str);
+
+            appController = new AppController(appModel, appView);
+            appController.restartApp();
+        }
     }
 
-    public String readContacts() {
-        HashMap<String, String> map = model.readContacts();
-        AtomicInteger count = new AtomicInteger(0);
-        StringBuilder stringBuilder = new StringBuilder();
-        map.forEach((key, value) ->
-                stringBuilder.append(count.incrementAndGet())
-                        .append(") ")
-                        .append(key)
-                        .append(" ")
-                        .append(value)
-                        .append("\n")
-        );
-        return stringBuilder.toString();
-    }
+    private String readContacts() {
+        List<Contact> contacts = model.readContacts();
 
-    private void restartApp() {
-        AppModel appModel = new AppModel();
-        AppView appView = new AppView(appModel);
-        AppController controller = new AppController(appModel, appView);
-        controller.runApp();
+        if (contacts != null) {
+            if (!contacts.isEmpty()) {
+                int count = 0;
+                String str;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                for (Contact contact : contacts) {
+                    count++;
+                    str = count + ") ID: "
+                            + contact.getId() + " - "
+                            + " " + contact.getName()
+                            + " " + contact.getPhone()
+                            + "\n";
+                    stringBuilder.append(str);
+                }
+                return stringBuilder.toString();
+            } else
+                return Constants.DATA_ABSENT_MSG;
+        } else
+            return Constants.DB_ABSENT_MSG;
     }
 }

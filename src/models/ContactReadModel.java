@@ -1,21 +1,57 @@
 package models;
 
+import database.DBCheck;
+import database.DBConn;
+import database.entities.Contact;
+import utils.Constants;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class ContactReadModel {
 
-    // Имитация чтения из БД.
-    public HashMap<String, String> readContacts() {
-        HashMap<String, String> hm = new HashMap<>();
+    List<Contact> list;
 
-        hm.put("Максим", "+80990000001");
-        hm.put("Дмитрий", "+80990000002");
-        hm.put("Станислав", "+80990000003");
-        hm.put("Оксана", "+80990000004");
-        hm.put("Ольга", "+80990000005");
-        hm.put("Александр", "+80990000006");
-        hm.put("Марина", "+80990000007");
+    public List<Contact> readContacts() {
+        // Проверяем на наличие файла БД.
+        // Если ДА, читаем данные,
+        // НЕТ - устанавливаем коллекцию в null.
+        if (DBCheck.isDBExists()) {
+            list = readData();
+        } else {
+            list = null;
+        }
+        return list;
+    }
 
-        return hm;
+    private List<Contact> readData() {
+
+        try (Statement stmt = DBConn.connect().createStatement()) {
+
+            list = new ArrayList<>();
+
+            String sql = "SELECT id, name, phone FROM " + Constants.TABLE_NAME;
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                list.add(new Contact(
+                                rs.getInt("id"),
+                                rs.getString("name"),
+                                rs.getString("phone")
+                        )
+                );
+            }
+            // Возвращаем коллекцию данных
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            // Если ошибка - возвращаем пустую коллекцию
+            return Collections.emptyList();
+        }
     }
 }

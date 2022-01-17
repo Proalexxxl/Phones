@@ -10,7 +10,6 @@ public class ContactReadView {
         this.model = model;
     }
 
-    // Вывод данных
     public void getOutput(String output) {
         System.out.println(output);
     }
