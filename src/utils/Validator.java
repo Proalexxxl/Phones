@@ -46,24 +46,6 @@ public class Validator {
         return str;
     }
 
-    // Валидация ввода ID
-    public static int validateIdInput(Scanner scanner) {
-        while (!scanner.hasNextInt()) {
-            String str = scanner.nextLine().trim();
-            System.out.printf(Constants.NOT_A_NUMBER_MSG, str);
-        }
-        int id = scanner.nextInt();
-        while (id <= 0) {
-            System.out.println(Constants.WRONG_VALUE_MSG);
-            while (!scanner.hasNextInt()) {
-                String str = scanner.next().trim();
-                System.out.printf(Constants.NOT_A_NUMBER_MSG, str);
-            }
-            id = scanner.nextInt();
-        }
-        return id;
-    }
-
     // Проверка наличия ввода в массиве выбора
     // действий через contains()
     public static boolean contains(final int[] array, final int value) {

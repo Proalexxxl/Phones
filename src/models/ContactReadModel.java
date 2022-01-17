@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class ContactReadModel {
@@ -18,9 +17,6 @@ public class ContactReadModel {
     List<Contact> list;
 
     public List<Contact> readContacts() {
-        // Проверяем на наличие файла БД.
-        // Если ДА, читаем данные,
-        // НЕТ - устанавливаем коллекцию в null.
         if (DBCheck.isDBExists()) {
             list = readData();
         } else {
@@ -30,7 +26,6 @@ public class ContactReadModel {
     }
 
     private List<Contact> readData() {
-
         try (Statement stmt = DBConn.connect().createStatement()) {
 
             list = new ArrayList<>();
@@ -46,11 +41,11 @@ public class ContactReadModel {
                         )
                 );
             }
-            // Возвращаем коллекцию данных
             return list;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            // Если ошибка - возвращаем пустую коллекцию
+
             return Collections.emptyList();
         }
     }

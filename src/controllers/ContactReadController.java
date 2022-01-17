@@ -6,6 +6,7 @@ import models.ContactReadModel;
 import utils.Constants;
 import views.AppView;
 import views.ContactReadView;
+
 import java.util.List;
 
 public class ContactReadController {

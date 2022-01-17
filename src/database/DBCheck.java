@@ -4,7 +4,6 @@ import utils.Constants;
 
 import java.io.File;
 
-// Класс-проверка наличия файла БД.
 public class DBCheck {
 
     public static boolean isDBExists() {
