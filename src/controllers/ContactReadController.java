@@ -8,7 +8,6 @@ import views.ContactReadView;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-// TASK исправьте ошибки компиляции
 public class ContactReadController {
 
     ContactReadModel model;

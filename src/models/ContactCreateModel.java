@@ -1,22 +1,34 @@
 package models;
 
-import java.util.HashMap;
+import database.DBCheck;
+import database.DBConn;
+import database.entities.Contact;
+import utils.Constants;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class ContactCreateModel {
 
-    // Имитация записи в БД.
-    public String createContacts() {
+    public String createContact(Contact contact) {
+        if (DBCheck.isDBExists()) {
+            return addData(contact);
+        } else {
+            return Constants.DB_ABSENT_MSG;
+        }
+    }
 
-        HashMap<String, String> hm = new HashMap<>();
+    private String addData(Contact contact) {
 
-        hm.put("Максим", "+80990000001");
-        hm.put("Дмитрий", "+80990000002");
-        hm.put("Станислав", "+80990000003");
-        hm.put("Оксана", "+80990000004");
-        hm.put("Ольга", "+80990000005");
-        hm.put("Александр", "+80990000006");
-        hm.put("Марина", "+80990000007");
+        String sql = "INSERT INTO " + Constants.TABLE_NAME + "(name, phone) VALUES(?, ?)";
 
-        return "Создано записей: " + hm.size();
+        try (PreparedStatement pstmt = DBConn.connect().prepareStatement(sql)) {
+            pstmt.setString(1, contact.getName());
+            pstmt.setString(2, contact.getPhone());
+            pstmt.executeUpdate();
+            return Constants.DATA_INSERT_MSG;
+        } catch (SQLException e) {
+            return e.getMessage();
+        }
     }
 }

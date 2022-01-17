@@ -5,7 +5,6 @@ import controllers.ContactReadController;
 import views.ContactCreateView;
 import views.ContactReadView;
 
-// TASK исправьте ошибки компиляции
 public class AppModel {
 
     private int choice;
@@ -26,8 +25,6 @@ public class AppModel {
     }
 
     public void readContacts() {
-        // TASK создайте необходимые экземпляры
-        // и исправьте ошибки компиляции
         ContactReadModel model = new ContactReadModel();
         ContactReadView view = new ContactReadView(model);
         ContactReadController controller = new ContactReadController(model, view);

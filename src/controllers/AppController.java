@@ -29,4 +29,11 @@ public class AppController {
             default -> throw new IllegalStateException("Unexpected value: " + choice);
         }
     }
+
+    public void restartApp() {
+        AppModel appModel = new AppModel();
+        AppView appView = new AppView(appModel);
+        AppController controller = new AppController(appModel, appView);
+        controller.runApp();
+    }
 }
