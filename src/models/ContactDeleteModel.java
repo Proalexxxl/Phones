@@ -4,7 +4,7 @@ import database.DBCheck;
 import database.DBConn;
 import database.entities.Contact;
 import utils.Constants;
-import utils.idChecker;
+import utils.IdChecker;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ public class ContactDeleteModel {
     }
 
     private String deleteData(Contact contact) {
-        if (idChecker.isIdExists(contact)) {
+        if (IdChecker.isIdExists(contact)) {
 
             String sql = "DELETE FROM " + Constants.TABLE_NAME + " WHERE id = ?";
 

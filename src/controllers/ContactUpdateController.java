@@ -1,6 +1,7 @@
 package controllers;
 
 import models.ContactUpdateModel;
+import utils.Constants;
 import views.ContactUpdateView;
 
 public class ContactUpdateController {
@@ -14,6 +15,14 @@ public class ContactUpdateController {
     }
 
     public void updateContacts() {
+        String str = model.updateContact(view.doInputs());
 
+        if (str.equals(Constants.DB_ABSENT_MSG)) {
+            view.getOutput(str);
+            System.exit(0);
+        } else {
+            view.getOutput(str);
+            AppController.restartApp();
+        }
     }
 }
