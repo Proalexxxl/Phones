@@ -1,10 +1,8 @@
 package controllers;
 
 import database.entities.Contact;
-import models.AppModel;
 import models.ContactReadModel;
 import utils.Constants;
-import views.AppView;
 import views.ContactReadView;
 
 import java.util.List;
@@ -13,9 +11,6 @@ public class ContactReadController {
 
     ContactReadModel model;
     ContactReadView view;
-    AppController appController;
-    AppModel appModel;
-    AppView appView;
 
     public ContactReadController(ContactReadModel model, ContactReadView view) {
         this.model = model;
@@ -31,8 +26,7 @@ public class ContactReadController {
         } else {
             view.getOutput(str);
 
-            appController = new AppController(appModel, appView);
-            appController.restartApp();
+            AppController.restartApp();
         }
     }
 

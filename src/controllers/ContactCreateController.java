@@ -1,19 +1,14 @@
 package controllers;
 
 import database.entities.Contact;
-import models.AppModel;
 import models.ContactCreateModel;
 import utils.Constants;
-import views.AppView;
 import views.ContactCreateView;
 
 public class ContactCreateController {
 
     ContactCreateModel model;
     ContactCreateView view;
-    AppModel appModel;
-    AppView appView;
-    AppController appController;
     Contact contact;
 
     public ContactCreateController(ContactCreateModel model, ContactCreateView view) {
@@ -31,8 +26,7 @@ public class ContactCreateController {
         } else {
             view.getOutput(str);
 
-            appController = new AppController(appModel, appView);
-            appController.restartApp();
+            AppController.restartApp();
         }
     }
 }

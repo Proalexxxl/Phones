@@ -58,4 +58,22 @@ public class Validator {
         }
         return result;
     }
+
+    // Валидация ввода ID
+    public static int validateIdInput(Scanner scanner) {
+        while (!scanner.hasNextInt()) {
+            String str = scanner.nextLine().trim();
+            System.out.printf(Constants.NOT_A_NUMBER_MSG, str);
+        }
+        int id = scanner.nextInt();
+        while (id <= 0) {
+            System.out.println(Constants.WRONG_VALUE_MSG);
+            while (!scanner.hasNextInt()) {
+                String str = scanner.next().trim();
+                System.out.printf(Constants.NOT_A_NUMBER_MSG, str);
+            }
+            id = scanner.nextInt();
+        }
+        return id;
+    }
 }

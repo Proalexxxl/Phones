@@ -1,6 +1,7 @@
 package controllers;
 
 import models.ContactDeleteModel;
+import utils.Constants;
 import views.ContactDeleteView;
 
 public class ContactDeleteController {
@@ -14,6 +15,14 @@ public class ContactDeleteController {
     }
 
     public void deleteContacts() {
+        String str = model.deleteContact(view.doInput());
+        if (str.equals(Constants.DB_ABSENT_MSG)) {
+            view.getOutput(str);
+            System.exit(0);
+        } else {
+            view.getOutput(str);
 
+            AppController.restartApp();
+        }
     }
 }

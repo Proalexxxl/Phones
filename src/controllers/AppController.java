@@ -32,7 +32,7 @@ public class AppController {
         }
     }
 
-    public void restartApp() {
+    public static void restartApp() {
         AppModel appModel = new AppModel();
         AppView appView = new AppView(appModel);
         AppController controller = new AppController(appModel, appView);
