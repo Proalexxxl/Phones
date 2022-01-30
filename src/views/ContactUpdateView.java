@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class ContactUpdateView {
 
     ContactUpdateModel model;
+    Scanner scanner;
     Contact contact;
     String title;
     int id;
@@ -20,18 +21,18 @@ public class ContactUpdateView {
 
     public Contact doInputs() {
 
-        Scanner scannerID = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         contact = new Contact();
 
         title = "Введите ID контакта: ";
         System.out.print(title);
-        id = Validator.validateIdInput(scannerID);
+        id = Validator.validateIdInput(scanner);
         contact.setId(id);
 
-        Scanner scannerPhone = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         title = "Введите новый телефон: ";
         System.out.print(title);
-        phone = Validator.validatePhoneInput(scannerPhone);
+        phone = Validator.validatePhoneInput(scanner);
         contact.setPhone(phone);
 
         return contact;
