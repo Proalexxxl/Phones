@@ -29,7 +29,7 @@ public class ContactUpdateView {
         id = Validator.validateIdInput(scanner);
         contact.setId(id);
 
-        scanner = new Scanner(System.in);
+//        scanner = new Scanner(System.in);
         title = "Введите новый телефон: ";
         System.out.print(title);
         phone = Validator.validatePhoneInput(scanner);
